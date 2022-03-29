@@ -20,7 +20,7 @@ const OrderSchema = new mongoose.Schema(
         amount: {
           type: Number, 
           required: true
-        }
+        },
         address: {
           type: Object,
           required: true
@@ -29,7 +29,7 @@ const OrderSchema = new mongoose.Schema(
           type: String,
           default: 'Pending', 
         }
-      } 
+      }
     },
    {timestamps: true} 
   )
