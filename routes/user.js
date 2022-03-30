@@ -57,3 +57,5 @@ router.get('/find/:id', verifyAdmin, async (req, res) => {
 })
 
 module.exports = router;
+
+https://www.getpostman.com/collections/03cd01678a5dbce092ca
