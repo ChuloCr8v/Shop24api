@@ -52,10 +52,22 @@ router.get('/find/:id', verifyAdmin, async (req, res) => {
     } = user._doc
     res.status(200).json(user)
   } catch (e) {
-    res.status(400).json(err)
+    res.status(400).json(e) 
+  }
+})
+
+//Get all users
+router.get('/find', verifyAdmin, async (req, res) => {
+  const query = req.query.new
+  try {
+    const users = query ? await User.find().sort({
+      _id: -1
+    }).limit(1) : await User.find()
+    res.status(200).send(users)
+  } catch (e) {
+    console.log(e)
+    res.status(500).json(e)
   }
 })
 
 module.exports = router;
-
-https://www.getpostman.com/collections/03cd01678a5dbce092ca
