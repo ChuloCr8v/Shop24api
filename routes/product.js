@@ -1,9 +1,6 @@
 const Product = require("../models/Product");
 const router = require("express").Router();
-const {
-  verifyAdmin,
-  verifyTokenAndAuth
-} = require("./verifyToken");
+const { verifyAdmin, verifyTokenAndAuth } = require("./verifyToken");
 
 router.post("/", verifyAdmin, async (req, res) => {
   //Create New Product
@@ -40,11 +37,15 @@ router.get("/", verifyTokenAndAuth, async (req, res) => {
 //Update Product
 router.put("/:id", verifyAdmin, async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    }, {
-      new: true
-    });
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+      }
+    );
     res.status(200).json(updatedProduct);
   } catch (error) {
     res.status(500).json(error);
@@ -53,14 +54,12 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 
 //Delete Product
 router.delete("/:id", verifyAdmin, async (req, res) => {
-
   try {
-    await Product.findByIdAndDelete(req.params.id)
-    res.status(200).json('Product Deleted Successfully')
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json("Product Deleted Successfully");
   } catch (e) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-
-})
+});
 
 module.exports = router;
