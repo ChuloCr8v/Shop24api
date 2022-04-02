@@ -1,6 +1,9 @@
 const router = require("express").Router();
-const Order = require("../models/order");
-const { verifyToken, verifyAdmin } = require("./verifyToken");
+const Order = require("../models/Order");
+const {
+  verifyToken,
+  verifyAdmin
+} = require("./verifyToken");
 
 //Create
 
@@ -8,9 +11,9 @@ router.post("/", verifyToken, async (req, res) => {
   const newOrder = new Order(req.body);
   try {
     const savedOrder = await newOrder.save();
-    res.status(200).send(newOrder);
+    res.status(200).json(newOrder);
   } catch (e) {
-    res.status(500).send(e);
+    res.status(500).json(e);
   }
 });
 
@@ -45,7 +48,9 @@ router.put("/:id", verifyAdmin, async (req, res) => {
       {
         $set: req.body,
       },
-      { new: true }
+      {
+        new: true
+      }
     );
     res.status(200).json(updatedProduct);
   } catch (error) {
