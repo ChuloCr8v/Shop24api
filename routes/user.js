@@ -45,6 +45,9 @@ router.delete("/:id", verifyTokenAndAuth, async (req, res) => {
 //Get User
 router.get("/find/:id", verifyAdmin, async (req, res) => {
   try {
+    const date = new Date();
+    const lastTwoMonths = new Date(date.setMonth(date.getMonth() - 2));
+    console.log(lastTwoMonths);
     const user = await User.findById(req.params.id);
     const { password, ...other } = user._doc;
     res.status(200).json(user);
