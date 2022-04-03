@@ -1,6 +1,45 @@
 const router = require("express").Router();
 const Order = require("../models/Order");
-const { verifyToken, verifyAdmin } = require("./verifyToken");
+const {
+  verifyToken,
+  verifyAdmin
+} = require("./verifyToken");
+
+
+//Get Monthly Income
+router.get("/income", verifyAdmin, async (req, res) => {
+  const date = new Date();
+  const lastMonth = new Date(date.setMonth(date.getMonth() - 2));
+  try {
+    const income = await Order.aggregate([{
+      $match: {
+        createdAt: {
+          $gte: lastMonth
+        }
+      }
+    },
+      {
+        $project: {
+          month: {
+            $month: "$createdAt"
+          },
+          sales: "$amount",
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: {
+            $sum: "$sales"
+          },
+        },
+      },
+    ]);
+    res.status(200).json(income);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //Create
 
@@ -66,31 +105,5 @@ router.delete("/:id", verifyAdmin, async (req, res) => {
   }
 });
 
-//Get Monthly Income
 
-router.get("/income", verifyAdmin, async (req, res) => {
-  const date = new Date();
-  const lastTwoMonths = new Date(date.setMonth(date.getMonth() - 2));
-
-  try {
-    const income = await Order.aggregate([
-      { $match: { createdAt: { $gte: lastTwoMonths } } },
-      {
-        $project: {
-          month: { $month: "$createdAt" },
-          sales: "$amount",
-        },
-      },
-      {
-        $group: {
-          _id: "$month",
-          total: { $sum: "$sales" },
-        },
-      },
-    ]);
-    res.status.send(income);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
 module.exports = router;
