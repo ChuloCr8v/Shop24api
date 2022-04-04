@@ -8,10 +8,10 @@ const productRoute = require("./routes/product");
 const orderRoute = require("./routes/order");
 const cartRoute = require("./routes/cart");
 const stripeRoute = require("./routes/cart");
-
+const cors = require("cors")
 dotenv.config();
 app.use(express.json());
-
+app.use(cors())
 app.get("/", (req, res) => {
   res.send("connection successful");
 });
