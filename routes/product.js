@@ -25,7 +25,7 @@ router.get("/:id", verifyTokenAndAuth, async (req, res) => {
 });
 
 //Get All Products
-router.get("/", verifyTokenAndAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const allProducts = await Product.find();
     res.status(200).json(allProducts);
