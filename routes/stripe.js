@@ -7,8 +7,6 @@ router.post("/payment", (req, res) => {
       source: req.body.tokenId,
       amount: req.body.amount,
       currency: "usd",
-      apiKey:
-        "sk_test_51KkiDeAUFaW3s2nQVKAGiCc10ItHHp4u1lBCXizdaLAFlGOfBTnPGoYq00OHu4XK6MwoUMAAUaVDEuQUmh6dylDs00Frc6chp9",
     },
     (stripeErr, stripeRes) => {
       if (stripeErr) {
