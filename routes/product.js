@@ -1,6 +1,9 @@
 const Product = require("../models/Product");
 const router = require("express").Router();
-const { verifyAdmin, verifyTokenAndAuth } = require("./verifyToken");
+const {
+  verifyAdmin,
+  verifyTokenAndAuth
+} = require("./verifyToken");
 
 router.post("/", verifyAdmin, async (req, res) => {
   //Create New Product
@@ -26,9 +29,19 @@ router.get("/:id", verifyTokenAndAuth, async (req, res) => {
 
 //Get All Products
 router.get("/", async (req, res) => {
+  const qCategory = req.query.category
   try {
-    const allProducts = await Product.find();
-    res.status(200).json(allProducts);
+    let products;
+    if (qCategory) {
+      products = await Product.find({
+        categories: {
+          $in: qCategory
+        }
+      })
+    } else {
+      products = await Product.find();
+    }
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json(error);
   }
