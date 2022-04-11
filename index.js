@@ -23,7 +23,7 @@ app.use("/api/products", productRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/checkout", stripeRoute);
-//app.use("/api", cloth)
+
 
 mongoose
   .connect(process.env.MONGO_URL)
