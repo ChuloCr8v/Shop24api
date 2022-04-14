@@ -15,7 +15,7 @@ router.post("/", verifyAdmin, async (req, res) => {
 });
 
 //Get One Product
-router.get("/:id", verifyTokenAndAuth, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const singleProduct = await Product.findById(req.params.id);
     res.status(200).send(singleProduct);
