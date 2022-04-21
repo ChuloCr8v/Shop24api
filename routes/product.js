@@ -1,6 +1,9 @@
 const Product = require("../models/Product");
 const router = require("express").Router();
-const { verifyAdmin, verifyTokenAndAuth } = require("./verifyToken");
+const {
+  verifyAdmin,
+  verifyTokenAndAuth
+} = require("./verifyToken");
 
 router.post("/", verifyAdmin, async (req, res) => {
   //Create New Product
@@ -10,7 +13,6 @@ router.post("/", verifyAdmin, async (req, res) => {
     res.status(200).json(savedProduct);
   } catch (e) {
     res.status(500).json(e);
-    console.log(e);
   }
 });
 
