@@ -66,7 +66,7 @@ router.put("/:id", verifyAdmin, async (req, res) => {
 });
 
 //Delete Product
-router.delete("/:id", verifyAdmin, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product Deleted Successfully");

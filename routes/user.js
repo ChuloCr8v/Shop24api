@@ -57,7 +57,7 @@ router.get("/find/:id", verifyAdmin, async (req, res) => {
 });
 
 //Get all users
-router.get("/find", verifyAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
   const query = req.query.new;
   try {
     const users = query
