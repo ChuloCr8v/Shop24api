@@ -7,13 +7,8 @@ const router = require("express").Router();
 const User = require("../models/User");
 
 //Edit User
-router.put("/:id", verifyTokenAndAuth, async (req, res) => {
-  if (req.body.password) {
-    req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.SEC_PHRASE
-    );
-  }
+router.put("/:id", async (req, res) => {
+
 
   try {
     const updateUser = await User.findByIdAndUpdate(
@@ -33,7 +28,7 @@ router.put("/:id", verifyTokenAndAuth, async (req, res) => {
 });
 
 //Delete User
-router.delete("/:id", verifyTokenAndAuth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("user has been deleted successfully");
@@ -43,7 +38,7 @@ router.delete("/:id", verifyTokenAndAuth, async (req, res) => {
 });
 
 //Get User
-router.get("/find/:id", verifyAdmin, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   try {
     const date = new Date();
     const lastTwoMonths = new Date(date.setMonth(date.getMonth() - 2));
@@ -65,7 +60,7 @@ router.get("/", async (req, res) => {
           .sort({
             _id: -1,
           })
-          .limit(1)
+          .limit(5)
       : await User.find();
     res.status(200).send(users);
   } catch (e) {
@@ -76,7 +71,7 @@ router.get("/", async (req, res) => {
 
 //Get User Stats
 
-router.get("/stats", verifyAdmin, async (req, res) => {
+router.get("/stats", async (req, res) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
 
