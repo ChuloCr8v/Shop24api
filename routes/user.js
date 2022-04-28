@@ -38,7 +38,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 //Get User
-router.get("/find/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const date = new Date();
     const lastTwoMonths = new Date(date.setMonth(date.getMonth() - 2));
